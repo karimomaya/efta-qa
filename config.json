@@ -1,0 +1,10 @@
+{
+    "mongo":{
+        "host":"localhost",
+        "user":"kmsys",
+        "passwd":"P@ssw0rd",
+        "port": 27017,
+        "database":"efta_qa",
+        "content" : "content"
+    }
+}
