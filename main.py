@@ -1,20 +1,5 @@
-from pymongo import MongoClient
-import json
 from excel import generate_excel
-
-with open('config.json') as json_data_file:
-    config = json.load(json_data_file)
-
-
-def connect_to_db():
-    connection = MongoClient(config['mongo']['host'], config['mongo']['port'], unicode_decode_error_handler='ignore')
-    db = connection[config['mongo']['database']]
-    db.authenticate(config['mongo']['user'], config['mongo']['passwd'], 'admin')
-    return db
-
-
-def get_collection(db, collection):
-    return db[collection]
+from mongodb import connect_to_db, get_collection
 
 
 def init_pip():
@@ -29,9 +14,13 @@ def init_pip():
     ]
 
 
-if __name__ == '__main__':
+def export_excel():
     db = connect_to_db()
     collection = get_collection(db, "content")
     docs = collection.aggregate(init_pip())
     generate_excel('data', docs)
     print(docs)
+
+
+if __name__ == '__main__':
+    export_excel()
